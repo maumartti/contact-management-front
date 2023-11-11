@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     'bootstrap/dist/css/bootstrap.min.css'
   ],
   modules: [
-    //...
+    '@pinia/nuxt',
     [
       '@vee-validate/nuxt',
       {

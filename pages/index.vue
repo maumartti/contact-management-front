@@ -5,16 +5,19 @@
       <h1 class="text-center">welcome</h1>
         <div class="card mt-5">
           <div class="card-body">
+            <div v-if="state.error" class="text-danger text-center my-3">
+              {{ state.error }}
+            </div>
             <InputText
               name="email"
               type="text"
-              :validate-rules="validateEmail"
+              :rules="schema.fields.email"
               placeholder="Enter your email"
             />
             <InputText
               name="password"
               type="password"
-              :validate-rules="validatePassword"
+              :rules="schema.fields.password"
               placeholder="Enter your password"
             />
             <div class="mb-3">
@@ -28,17 +31,42 @@
 </template>
 
 
-<script setup>
+<script >
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
+import { useAuthStore } from '~/stores/auth';
+import { useRouter } from 'vue-router';
 
-const schema = yup.object({
-  email: yup.string().required().email().label('Your Email'),
-  password: yup.string().required().min(8).label('Your Password'),
+export default defineComponent({
+  components: { Form, Field },
+  setup() {
+    const state = reactive({
+      error: null,
+    });
+
+    const schema = yup.object({
+      email: yup.string().required().email().label('Your Email'),
+      password: yup.string().required().min(8).label('Your Password'),
+    });
+
+    const authStore = useAuthStore();
+    const router = useRouter();
+
+    const onSubmit = async (values) => {
+      try {
+        await authStore.login(values.email, values.password);
+        router.push('/contactList');
+      } catch (error) {
+        console.error('Error al iniciar sesión:', error);
+        state.error = error;
+      }
+    };
+
+    return {
+      schema,
+      state,
+      onSubmit,
+    };
+  },
 });
-
-function onSubmit(values) {
-  // Submit values to API...
-  alert(JSON.stringify(values, null, 2));
-}
 </script>
