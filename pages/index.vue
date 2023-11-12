@@ -31,11 +31,15 @@
 </template>
 
 
-<script >
+<script>
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
 import { useAuthStore } from '~/stores/auth';
 import { useRouter } from 'vue-router';
+
+definePageMeta({
+  middleware: "guest",
+})
 
 export default defineComponent({
   components: { Form, Field },
@@ -57,7 +61,6 @@ export default defineComponent({
         await authStore.login(values.email, values.password);
         router.push('/contactList');
       } catch (error) {
-        console.error('Error al iniciar sesión:', error);
         state.error = error;
       }
     };

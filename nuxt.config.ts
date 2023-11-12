@@ -1,17 +1,22 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      API_BASE_URL: process.env.API_BASE_URL,
+      BASE_URL: process.env.BASE_URL
+    }
+  },
+  // Resto de tu configuración...
   devtools: { enabled: true },
   css: [
-    'bootstrap/dist/css/bootstrap.min.css'
+    'bootstrap/dist/css/bootstrap.min.css',
   ],
   modules: [
     '@pinia/nuxt',
+    'nuxt-icon',
     [
       '@vee-validate/nuxt',
       {
-        // disable or enable auto imports
         autoImports: true,
-        // Use different names for components
         componentNames: {
           Form: 'VeeForm',
           Field: 'VeeField',
