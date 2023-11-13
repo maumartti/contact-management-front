@@ -2,7 +2,7 @@
   <div>
     <div v-if="contactData" class="container pt-3">
       <div class="d-flex">
-        <img :src="contactData.image.includes('http') ? contactData.image : baseUrl+'/images/contacts/'+contactData.image" class="user-photo img-fluid rounded-circle me-3" style="width:74px;height:74px;">
+        <img :src="contactData.image" class="user-photo img-fluid rounded-circle me-3" style="width:74px;height:74px;">
         <div class="pt-2">
           <h3 class="">{{ contactData.name }}</h3>
           <p class="mt-0">{{ contactData.address }}</p>
@@ -51,9 +51,6 @@ export default {
     const contactsStore = useContactsStore();
     const contactData = ref(null);
 
-    const config = useRuntimeConfig();
-    const baseUrl = ref(config.public.BASE_URL);
-
     // Obtener datos del usuario basado en el ID
     onMounted(() => {
       const contacts = contactsStore.data.user.contacts;
@@ -62,8 +59,7 @@ export default {
 
     return { 
       id, 
-      contactData,
-      baseUrl
+      contactData
     };
   },
 };

@@ -37,8 +37,27 @@ export const useContactsStore = defineStore('contacts', {
         //console.log('data.user',this.data.user)
         return true
       } else {
-        // Manejar errores, devolver un error, etc.
         throw new Error('Could not update contact');
+      }
+    },
+    async createContact(contactData) {
+      const token = useCookie('token');
+      const config = useRuntimeConfig();
+
+      const response = await useFetch(`${config.public.API_BASE_URL}/contacts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token.value}`,
+        },
+        body: JSON.stringify(contactData), // Aquí pasas los datos del contacto nuevo
+      });
+      if (response.status.value == "success") { 
+        this.data.user.contacts = response.data.value.contacts; // Actualiza la lista de contactos del userAuth en el store
+        //console.log('data.user',this.data.user)
+        return true
+      } else {
+        throw new Error('Could not add contact');
       }
     },
   },

@@ -2,15 +2,15 @@
   <div>
     <div v-if="state">
       <div v-if="state.error" class="alert alert-danger" role="alert">
-      {{state.error}}
+      {{state.error}} <IconCSS name="codicon:error" />
       </div>
       <div v-if="state.success" class="alert alert-success" role="alert">
-      {{state.success}}
+      {{state.success}} <IconCSS name="el:ok-sign" />
       </div>
     </div>
     <div v-if="contactData" class="container pt-3">
       <div class="d-flex">
-        <img :src="contactData.image.includes('http') ? contactData.image : baseUrl+'/images/contacts/'+contactData.image" class="user-photo img-fluid rounded-circle me-3" style="width:74px;height:74px;">
+        <img :src="contactData.image" class="user-photo img-fluid rounded-circle me-3" style="width:74px;height:74px;">
         <div class="pt-2">
           <h3 class="">{{ contactData.name }}</h3>
           <p class="mt-0">{{ contactData.address }}</p>
@@ -104,10 +104,7 @@ export default defineComponent({
     const { id } = useRoute().params;
     const contactsStore = useContactsStore();
     const contactData = ref(null);
-    const state = reactive({ error: null});
-
-    const config = useRuntimeConfig();
-    const baseUrl = ref(config.public.BASE_URL);
+    const state = reactive({ error: null, success:null});
 
     // Obtener datos del usuario basado en el ID
     onMounted(() => {
@@ -119,18 +116,19 @@ export default defineComponent({
       name: yup.string().required().max(20).label('Name'),
       image: yup.string().required().max(600).matches(/^(http|https):\/\/.*\.(jpg|jpeg|png)$/, { message: 'Image must start with http:// or https:// and end with .jpg, .jpeg, or .png' }).label('image'),
       address: yup.string().required().max(255).label('address'),
-      tel: yup.string().required().max(12).label('tel'),
+      tel: yup.number().integer('Must be an integer').required('Phone number is required').max(999999999999, 'Maximum 12 digits').label('tel'),
       email: yup.string().required().email().max(36).label('email'),
     });
 
+    //input address Google Places API result select
+    const selectedAddress = ref('');
     const setPlace = (val) => {
-      console.log('setPlace:::')
-      contactData.value.address = val;
+      selectedAddress.value = val;//changed de address by selected in input google map places
     };
-
 
     const onSubmit = async (values) => {
       try {
+        values.address = selectedAddress.value || values.address;// replace for new address selected
         const update = await contactsStore.updateContact(values, id);
         if (update) {
           state.success = 'Contact updated successfully';
@@ -140,11 +138,9 @@ export default defineComponent({
       }
     };
 
-
     return { 
       id, 
       contactData,
-      baseUrl,
       schema,
       onSubmit,
       setPlace,
