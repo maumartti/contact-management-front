@@ -5,11 +5,11 @@ export default defineNuxtConfig({
       BASE_URL: process.env.BASE_URL
     }
   },
-  // Resto de tu configuración...
   devtools: { enabled: true },
   css: [
     'bootstrap/dist/css/bootstrap.min.css',
   ],
+  build: { transpile: ["@fawmi/vue-google-maps"] },
   modules: [
     '@pinia/nuxt',
     'nuxt-icon',

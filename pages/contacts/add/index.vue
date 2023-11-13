@@ -24,7 +24,8 @@
               </li>
               <li class="list-group-item border-0 px-0">
                 <h4>Address</h4>
-                <InputText
+                 
+                <InputAddressGMap
                   name="address"
                   type="text"
                   :rules="schema.fields.address"
@@ -37,7 +38,7 @@
                   name="tel"
                   type="text"
                   :rules="schema.fields.tel"
-                  placeholder=""
+                  placeholder="write an address..."
                 />
               </li>
               <li class="list-group-item border-0 px-0">
@@ -50,7 +51,7 @@
                 />
               </li>
             </ul>
-            <div class="mb-3 mt-4">
+            <div class="mb-3 mt-2">
               <button type="button" class="btn btn-primary rounded-pill w-100">ADD CONTACT</button>
             </div>
             </Form> 
@@ -77,10 +78,8 @@ export default defineComponent({
     const config = useRuntimeConfig();
     const baseUrl = ref(config.public.BASE_URL);
 
-    // Obtener datos del usuario basado en el ID
-    onMounted(() => {
-
-    });
+    // onMounted(() => {
+    // });
 
     const schema = yup.object({
       name: yup.string().required().max(20).label('Name'),
@@ -89,9 +88,14 @@ export default defineComponent({
       email: yup.string().required().email().max(36).label('email'),
     });
 
-    return { 
+    const setPlace = () => {
+      //..
+    };
+
+    return {
       baseUrl,
-      schema
+      schema,
+      setPlace
     };
   },
 });

@@ -9,9 +9,9 @@
         </div>
       </div>
       <div class="full-height">
-        <div class="container pt-3 px-0">
+        <div class="container pt-2 px-0">
           <div v-if="contactData">
-            <Form @submit="onSubmit" :validation-schema="schema" class="needs-validation container mt-5">
+            <Form @submit="onSubmit" :validation-schema="schema" class="needs-validation container mt-0">
             <ul class="list-group no-borders">
               <li class="list-group-item border-0 px-0">
                 <h4>Name</h4>
@@ -29,7 +29,7 @@
               </li>
               <li class="list-group-item border-0 px-0">
                 <h4>Address</h4>
-                <InputText
+                <InputAddressGMap
                   name="address"
                   type="text"
                   :rules="schema.fields.address"
@@ -58,7 +58,7 @@
                 />
               </li>
             </ul>
-            <div class="mb-3 mt-4">
+            <div class="mb-3 mt-2 mb-4">
               <button type="button" class="btn btn-primary rounded-pill w-100">SAVE</button>
             </div>
             </Form> 

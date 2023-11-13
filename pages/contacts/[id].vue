@@ -25,7 +25,7 @@
                 <p>{{ contactData.email }}</p>
               </li>
             </ul>
-            <div class="mb-3">
+            <div class="mb-3 mt-3">
               <button type="button" @click="$router.push('/contacts/edit/'+contactData.id)" class="btn btn-primary rounded-pill w-100">EDIT</button>
             </div>
           </div>

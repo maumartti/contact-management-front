@@ -42,8 +42,9 @@ export const useAuthStore = defineStore('auth', {
     },
     async logout() {
       console.log('logout')
+      const token = useCookie('token');
+      token.value = null;
       const router = useRouter();
-      document.cookie = 'token=; Max-Age=-1; SameSite=Strict';
       router.push('/')
     },
   },
