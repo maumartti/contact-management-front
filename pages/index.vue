@@ -59,7 +59,7 @@ export default defineComponent({
     const onSubmit = async (values) => {
       try {
         await authStore.login(values.email, values.password);
-        router.push('/contactList');
+        router.push('/contacts');
       } catch (error) {
         state.error = error;
       }

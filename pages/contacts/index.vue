@@ -1,8 +1,11 @@
 <template>
   <div>
-    <div class="container pt-4">
-      <h1>Contacts</h1>
+    <div class="container p-3 pb-0 d-flex">
+      <button class="btn btn-dark ms-auto" @click="logout">Logout</button>
+    </div>
 
+    <div class="container pt-2">
+      <h1>Contacts</h1>
       <div class="input-group mb-3 mt-4">
         <input type="text" class="form-control" placeholder="Search..." aria-label="Search" aria-describedby="button-search">
         <button class="btn btn-outline-secondary" type="button" id="button-search">
@@ -11,7 +14,7 @@
       </div>
 
       <ul class="list-group">
-        <li v-for="(contact, index) in user.contacts" :key="index" class="list-group-item d-flex justify-content-between align-items-center">
+        <li v-for="(contact, index) in user.contacts" :key="index" @click="$router.push('/contacts/'+contact.id)" class="list-group-item d-flex justify-content-between align-items-center">
           <div class="d-flex">
             <img :src="baseUrl+'/images/contacts/'+contact.image" class="user-photo img-fluid rounded-circle me-3" style="width: 72px;" :alt="'contact ' + (index + 1)">
             <div>
@@ -24,7 +27,7 @@
           </span>
         </li>
       </ul>
-    <button class="btn btn-dark btn-block w-100 mt-4" @click="logout">Logout</button>
+    
     </div>
   </div>
 </template>
@@ -35,6 +38,10 @@ import { useAuthStore } from '~/stores/auth';
 import { useContactsStore } from '~/stores/contacts';
 import { onMounted, ref } from 'vue';
 
+definePageMeta({
+  middleware: "auth",
+})
+
 export default {
   setup() {
     const config = useRuntimeConfig();
@@ -44,7 +51,7 @@ export default {
     const user = ref({ contacts: [] });
 
     onMounted(async () => {
-     await refreshNuxtData(); // Refresh data to reload browser load data
+     //await refreshNuxtData(); // Refresh data to reload browser load data
       try {
         const userData = await contactsStore.getContactsUserAuth();
         if (userData && userData.user) {
@@ -64,7 +71,7 @@ export default {
     return {
       baseUrl,
       user,
-      logout,
+      logout
     };
   },
 };

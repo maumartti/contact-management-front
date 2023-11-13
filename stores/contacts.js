@@ -16,6 +16,7 @@ export const useContactsStore = defineStore('contacts', {
         },
       });
       if (data && data.value) {
+        this.data = data.value;
         return data.value;
       }
     },
