@@ -12,7 +12,7 @@
       <ul class="list-group">
         <li v-for="(contact, index) in user.contacts" :key="index" @click="$router.push('/contacts/'+contact.id)" class="list-group-item d-flex justify-content-between align-items-center">
           <div class="d-flex">
-            <img :src="baseUrl+'/images/contacts/'+contact.image" class="user-photo img-fluid rounded-circle me-3" style="width: 72px;" :alt="'contact ' + (index + 1)">
+            <img :src="contact.image.includes('http') ? contact.image : baseUrl+'/images/contacts/'+contact.image" class="user-photo img-fluid rounded-circle me-3" style="width: 72px;" :alt="'contact ' + (index + 1)">
             <div>
               <h5>{{ contact.name }}</h5>
               <p>{{ contact.address }}</p>

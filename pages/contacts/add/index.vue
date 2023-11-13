@@ -20,11 +20,15 @@
               </li>
               <li class="list-group-item border-0 px-0">
                 <h4>Profile Picture</h4>
-                <input type="file" class="form-control" />
+                <InputText
+                  name="image"
+                  type="text"
+                  :rules="schema.fields.image"
+                  placeholder=""
+                />
               </li>
               <li class="list-group-item border-0 px-0">
                 <h4>Address</h4>
-                 
                 <InputAddressGMap
                   name="address"
                   type="text"
@@ -52,7 +56,7 @@
               </li>
             </ul>
             <div class="mb-3 mt-2">
-              <button type="button" class="btn btn-primary rounded-pill w-100">ADD CONTACT</button>
+              <button type="submit" class="btn btn-primary rounded-pill w-100">ADD CONTACT</button>
             </div>
             </Form> 
           </div>
@@ -83,6 +87,7 @@ export default defineComponent({
 
     const schema = yup.object({
       name: yup.string().required().max(20).label('Name'),
+      image: yup.string().required().max(600).matches(/^(http|https):\/\/.*\.(jpg|jpeg|png)$/, { message: 'Image must start with http:// or https:// and end with .jpg, .jpeg, or .png' }).label('image'),
       address: yup.string().required().max(255).label('address'),
       tel: yup.string().required().max(12).label('tel'),
       email: yup.string().required().email().max(36).label('email'),
