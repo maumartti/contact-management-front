@@ -49,8 +49,8 @@ export default defineComponent({
     });
 
     const schema = yup.object({
-      email: yup.string().required().email().label('Your Email'),
-      password: yup.string().required().min(8).label('Your Password'),
+      email: yup.string().required().email().max(64).label('Your Email'),
+      password: yup.string().required().min(8).max(30).label('Your Password'),
     });
 
     const authStore = useAuthStore();

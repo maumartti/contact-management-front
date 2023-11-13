@@ -3,7 +3,7 @@
     <Field :name="name" :type="type" :value="value" :rules="validateRules" :placeholder="placeholder" v-slot="{ field, errorMessage, meta }"
     :validateOnBlur="false" :validateOnChange="true" :validateOnInput="true">
 
-      <input v-bind="field" class="form-control rounded-3" />
+      <input v-bind="field" :type="type" class="form-control rounded-3" />
       <span class="text-danger" v-if="errorMessage">{{ errorMessage }}</span>
       <span class="text-success" v-if="meta.valid && meta.touched">Field is valid</span>
       
