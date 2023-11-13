@@ -1,13 +1,5 @@
 <template>
   <div>
-
-    <div class="container d-flex justify-content-between p-3">
-      <button class="btn btn-light" @click="$router.push('/contacts')">
-        <IconCSS name="ep:back" /> Back
-      </button>
-      <button class="btn btn-dark" @click="logout">Logout</button>
-    </div>
-
     <div v-if="contactData" class="container pt-3">
       <div class="d-flex">
         <img :src="baseUrl+'/images/contacts/'+contactData.image" class="user-photo img-fluid rounded-circle me-3" style="width:74px;height:74px;">
@@ -44,12 +36,12 @@
 </template>
 
 <script>
-import { useAuthStore } from '~/stores/auth';
 import { useContactsStore } from '~/stores/contacts';
 import { onMounted, ref } from 'vue';
 
 
 definePageMeta({
+  layout: "authentication",
   middleware: "auth",
 })
 
@@ -69,17 +61,10 @@ export default {
       contactData.value = contacts.find(contact => contact.id == id);
     });
 
-    //logout action
-    const authStore = useAuthStore();
-    const logout = () => {
-      authStore.logout();
-    };
-
     return { 
       id, 
       contactData,
-      baseUrl,
-      logout
+      baseUrl
     };
   },
 };

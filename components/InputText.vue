@@ -1,6 +1,6 @@
 <template>
   <div class="mb-3">
-    <Field :name="name" :type="type" :rules="validateRules" :placeholder="placeholder" v-slot="{ field, errorMessage, meta }"
+    <Field :name="name" :type="type" :value="value" :rules="validateRules" :placeholder="placeholder" v-slot="{ field, errorMessage, meta }"
     :validateOnBlur="false" :validateOnChange="true" :validateOnInput="true">
 
       <input v-bind="field" class="form-control rounded-3" />
@@ -23,6 +23,11 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  value: {
+    type: String,
+    default: "",
+    required: false,
+  },
   placeholder: {
     type: String,
     default: "",
@@ -32,10 +37,4 @@ const props = defineProps({
     default: null,
   },
 });
-
 </script>
-
-<!-- Opcional: Estilos CSS para el componente -->
-<style scoped>
-/* Agrega tus estilos específicos aquí si es necesario */
-</style>

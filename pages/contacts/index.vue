@@ -1,9 +1,5 @@
 <template>
   <div>
-    <div class="container p-3 pb-0 d-flex">
-      <button class="btn btn-dark ms-auto" @click="logout">Logout</button>
-    </div>
-
     <div class="container pt-2">
       <h1>Contacts</h1>
       <div class="input-group mb-3 mt-4">
@@ -34,11 +30,11 @@
 
 
 <script>
-import { useAuthStore } from '~/stores/auth';
 import { useContactsStore } from '~/stores/contacts';
 import { onMounted, ref } from 'vue';
 
 definePageMeta({
+  layout: "authentication",
   middleware: "auth",
 })
 
@@ -62,16 +58,9 @@ export default {
       }
     });
 
-    //logout action
-    const authStore = useAuthStore();
-    const logout = () => {
-      authStore.logout();
-    };
-
     return {
       baseUrl,
       user,
-      logout
     };
   },
 };

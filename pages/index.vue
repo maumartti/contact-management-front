@@ -2,9 +2,9 @@
   <Form @submit="onSubmit" :validation-schema="schema" class="needs-validation container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
-      <h1 class="text-center">welcome</h1>
-        <div class="card mt-5">
-          <div class="card-body">
+      <h1 class="text-center h1">Welcome</h1>
+        <div class="card mt-4 border-0">
+          <div class="card-body border-0">
             <div v-if="state.error" class="text-danger text-center my-3">
               {{ state.error }}
             </div>
@@ -73,3 +73,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+.h1{
+  font-size: 48px !important;
+}
+</style>

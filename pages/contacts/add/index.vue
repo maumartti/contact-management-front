@@ -1,17 +1,13 @@
 <template>
   <div>
-    <div v-if="contactData" class="container pt-3">
-      <div class="d-flex">
-        <img :src="baseUrl+'/images/contacts/'+contactData.image" class="user-photo img-fluid rounded-circle me-3" style="width:74px;height:74px;">
-        <div class="pt-2">
-          <h3 class="">{{ contactData.name }}</h3>
-          <p class="mt-0">{{ contactData.address }}</p>
+    <div class="container pt-4">
+        <div class="d-flex">
+          <h1 class="">Add New Contact</h1>
         </div>
-      </div>
       <div class="full-height">
-        <div class="container pt-3 px-0">
-          <div v-if="contactData">
-            <Form @submit="onSubmit" :validation-schema="schema" class="needs-validation container mt-5">
+        <div class="container pt-0 px-0">
+          <div>
+            <Form @submit="onSubmit" :validation-schema="schema" class="needs-validation container mt-3">
             <ul class="list-group no-borders">
               <li class="list-group-item border-0 px-0">
                 <h4>Name</h4>
@@ -20,7 +16,6 @@
                   type="text"
                   :rules="schema.fields.name"
                   placeholder=""
-                  :value="contactData.name"
                 />
               </li>
               <li class="list-group-item border-0 px-0">
@@ -34,7 +29,6 @@
                   type="text"
                   :rules="schema.fields.address"
                   placeholder=""
-                  :value="contactData.address"
                 />
               </li>
               <li class="list-group-item border-0 px-0">
@@ -44,7 +38,6 @@
                   type="text"
                   :rules="schema.fields.tel"
                   placeholder=""
-                  :value="contactData.tel"
                 />
               </li>
               <li class="list-group-item border-0 px-0">
@@ -54,12 +47,11 @@
                   type="text"
                   :rules="schema.fields.email"
                   placeholder=""
-                  :value="contactData.email"
                 />
               </li>
             </ul>
             <div class="mb-3 mt-4">
-              <button type="button" class="btn btn-primary rounded-pill w-100">SAVE</button>
+              <button type="button" class="btn btn-primary rounded-pill w-100">ADD CONTACT</button>
             </div>
             </Form> 
           </div>
@@ -72,7 +64,6 @@
 <script>
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import * as yup from 'yup';
-import { useContactsStore } from '~/stores/contacts';
 import { onMounted, ref } from 'vue';
 
 definePageMeta({
@@ -83,18 +74,12 @@ definePageMeta({
 export default defineComponent({
   components: { Form, Field },
   setup() {
-    const { id } = useRoute().params;
-    const contactsStore = useContactsStore();
-    const contactData = ref(null);
-
     const config = useRuntimeConfig();
     const baseUrl = ref(config.public.BASE_URL);
 
     // Obtener datos del usuario basado en el ID
     onMounted(() => {
-      const contacts = contactsStore.data.user.contacts;
-      //console.log('contacts', contacts);
-      contactData.value = contacts.find(contact => contact.id == id);
+
     });
 
     const schema = yup.object({
@@ -105,8 +90,6 @@ export default defineComponent({
     });
 
     return { 
-      id, 
-      contactData,
       baseUrl,
       schema
     };

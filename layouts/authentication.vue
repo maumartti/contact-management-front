@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Menu />
+    <Header />
     <slot></slot>
   </div>
 </template>
